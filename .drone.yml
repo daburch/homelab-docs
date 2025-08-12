@@ -1,20 +1,14 @@
----
 kind: pipeline
 type: docker
 name: default
 
 steps:
   - name: build-push
-    image: docker:20.10
-    privileged: true
-    environment:
-      DOCKER_HOST: tcp://localhost:2375
-      DOCKER_USER:
+    image: plugins/docker
+    settings:
+      repo: daburch/homelab-docs
+      tags: 0.0.1
+      username:
         from_secret: DOCKER_USER
-      DOCKER_PASSWORD:
+      password:
         from_secret: DOCKER_PASSWORD
-    commands:
-      - sleep 10
-      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
-      - docker build -t daburch/homelab-docs:0.0.1 .
-      - docker push daburch/homelab-docs:0.0.1
