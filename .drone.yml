@@ -5,7 +5,7 @@ name: default
 
 steps:
   - name: build-push
-    image: docker:20.10
+    image: plugins/docker
     privileged: true
     environment:
       DOCKER_USER:
