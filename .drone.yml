@@ -8,7 +8,7 @@ steps:
     image: docker:20.10
     privileged: true
     environment:
-      DOCKER_HOST: tcp://dind:2375
+      DOCKER_HOST: tcp://localhost:2375
       DOCKER_USER:
         from_secret: DOCKER_USER
       DOCKER_PASSWORD:
