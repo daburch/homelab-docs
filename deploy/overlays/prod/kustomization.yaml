@@ -1,7 +1,2 @@
-bases:
+resources:
   - ../../base
-namespace: homelab-docs
-images:
-  - name: REPLACE_IMAGE
-    newName: docker.io/daburch/homelab-docs
-    newTag: {BUILD_NUMBER}
