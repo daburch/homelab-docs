@@ -1,0 +1,23 @@
+kind: pipeline
+type: docker
+name: build
+
+steps:
+  - name: build-and-push
+    image: gcr.io/kaniko-project/executor:latest
+    environment:
+      DOCKER_CONFIG: /kaniko/.docker/
+    volumes:
+      - name: docker-config
+        path: /kaniko/.docker/
+    commands:
+      - echo "{\"auths\":{\"$DOCKER_REGISTRY\":{\"username\":\"$DOCKER_USERNAME\",\"password\":\"$DOCKER_PASSWORD\"}}}" > /kaniko/.docker/config.json
+      - /kaniko/executor
+        --context $DRONE_WORKSPACE
+        --dockerfile $DRONE_WORKSPACE/Dockerfile
+        --destination $DOCKER_REGISTRY/$DOCKER_REPO:$DRONE_BUILD_NUMBER
+        --cache=true
+
+volumes:
+  - name: docker-config
+    temp: {}
