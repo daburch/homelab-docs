@@ -5,6 +5,7 @@ name: default
 steps:
   - name: build-push
     image: plugins/docker
+    privileged: true
     settings:
       repo: daburch/homelab-docs
       tags: 0.0.1
