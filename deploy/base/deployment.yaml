@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: homelab-docs
+  namespace: homelab-docs
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: homelab-docs
+  template:
+    metadata:
+      labels:
+        app: homelab-docs
+    spec:
+      containers:
+        - name: homelab-docs
+          image: REPLACE_IMAGE
+          ports:
+            - containerPort: 8080
