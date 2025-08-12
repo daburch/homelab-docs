@@ -4,29 +4,15 @@ type: docker
 name: default
 
 steps:
-- name: build-push
-  image: docker:dind
-  volumes:
-  - name: dockersock
-    path: /var/run
-  environment:
-    DOCKER_USER:
-      from_secret: DOCKER_USER
-    DOCKER_PASSWORD:
-      from_secret: DOCKER_PASSWORD
-  commands:
-  - sleep 5 ## give docker enough time to start
-  - docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-  - docker build -t daburch/homelab-docs:0.0.1 .
-  - docker push daburch/homelab-docs:0.0.1
-
-services:
-- name: docker
-  image: docker:dind
-  privileged: true
-  volumes:
-  - name: dockersock
-    path: /var/run
-volumes:
-- name: dockersock
-  temp: {}
+  - name: build-push
+    image: docker:20.10
+    privileged: true
+    environment:
+      DOCKER_USER:
+        from_secret: DOCKER_USER
+      DOCKER_PASSWORD:
+        from_secret: DOCKER_PASSWORD
+    commands:
+      - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
+      - docker build -t daburch/homelab-docs:0.0.1 .
+      - docker push daburch/homelab-docs:0.0.1
