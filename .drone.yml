@@ -6,6 +6,7 @@ name: default
 steps:
   - name: build-push
     image: docker:20.10
+    privileged: true
     environment:
       DOCKER_USER:
         from_secret: DOCKER_USER
