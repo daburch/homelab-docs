@@ -16,3 +16,8 @@ steps:
       - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USER --password-stdin
       - docker build -t daburch/homelab-docs:0.0.1 .
       - docker push daburch/homelab-docs:0.0.1
+
+services:
+  - name: docker
+    image: docker:20.10-dind
+    privileged: true
