@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: homelab-docs
+  namespace: homelab-docs
+spec:
+  selector:
+    app: homelab-docs
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8080
