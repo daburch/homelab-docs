@@ -1,0 +1,23 @@
+site_name: Homelab Documentation
+site_description: Step-by-step rebuild guide for my homelab
+repo_url: https://github.com/daburch/homelab-docs
+theme:
+  name: mkdocs
+  features:
+    - navigation.instant
+    - navigation.tracking
+    - search.highlight
+    - search.suggest
+    - content.code.copy
+    - navigation.expand
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+
+nav:
+  - Home: index.md
+  - Kubernetes:
+      - Cluster Setup: kubernetes-setup.md
+  - Services:
+      - Jellyfin: jellyfin-setup.md
