@@ -5,6 +5,9 @@ metadata:
   namespace: homelab-docs
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "1024m"
+    "gethomepage.dev/enabled": "true"
+    "gethomepage.dev/icon": "https://plmlab.math.cnrs.fr/uploads/-/system/project/avatar/1364/mkdocs_logo.png"
+    "gethomepage.dev/name": "Homelab Docs"
 spec:
   ingressClassName: nginx
   rules:
