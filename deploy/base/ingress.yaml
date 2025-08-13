@@ -22,4 +22,4 @@ spec:
               service:
                 name: homelab-docs
                 port:
-                  number: 80
+                  number: 8080
