@@ -4,14 +4,14 @@ Hello, World! This is a living document explaining the technologies and tools us
 
 ## Technologies
 
-- Proxmox
-- OPNSense
-- Kubernetes ( Talos Linux )
-- Pihole + Unbound
-- Truenas
-- Caddy
-- Vaultwarden
-- Servarr stack
-- Tekton
-- Homepage
-- MKDocs-Material
+- [Proxmox](proxmox.md)
+- [OPNSense](opnsense.md)
+- [Kubernetes (Talos Linux)](kubernetes.md)
+- [Pihole + Unbound](pihole.md)
+- [Truenas](truenas.md)
+- [Caddy](caddy.md)
+- [Vaultwarden](vaultwarden.md)
+- [Servarr stack](servarr.md)
+- [Tekton](tekton.md)
+- [Homepage](homepage.md)
+- [MKDocs-Material](mkdocs-material.md)
