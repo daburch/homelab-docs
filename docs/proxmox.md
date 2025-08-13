@@ -51,3 +51,16 @@ The VM needing the GPU should already be created and powered off.
         - `hostpci1: 01:00.1,pcie=1`
         - `hostpci2: 01:00.2,pcie=1`
         - `hostpci3: 01:00.3,pcie=1`
+
+## Drive passthrough
+
+Storage drives can be passed through to VMs, TrueNAS in particular, to allow direct access to the physical disks. This is useful for performance and for using features like ZFS.
+
+### Enable Drive Passthrough
+
+1. Identify the disk you want to passthrough:
+   - `ls -l /dev/disk/by-id/`
+2. Edit the VM configuration:
+   - `nano /etc/pve/qemu-server/<VMID>.conf`
+   - Add the following for each disk:
+     - `scsi1: /dev/disk/by-id/<DISK_ID>`

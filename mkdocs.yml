@@ -20,5 +20,6 @@ nav:
   - Proxmox: proxmox.md
   - OPNSense: opnsense.md
   - Kubernetes: kubernetes.md
-  - Pihole: pihole.md
+  - PiHole: pihole.md
   - Caddy: caddy.md
+  - TrueNAS: truenas.md
