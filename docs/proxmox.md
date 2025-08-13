@@ -47,7 +47,7 @@ The VM needing the GPU should already be created and powered off.
 - Edit the VM config
     - `nano /etc/pve/qemu-server/<VMID>.conf`
     - Add the GPU PCI address:
-        `hostpci0: 01:00.0,pcie=1`
-        `hostpci1: 01:00.1,pcie=1`
-        `hostpci2: 01:00.2,pcie=1`
-        `hostpci3: 01:00.3,pcie=1`
+        - `hostpci0: 01:00.0,pcie=1`
+        - `hostpci1: 01:00.1,pcie=1`
+        - `hostpci2: 01:00.2,pcie=1`
+        - `hostpci3: 01:00.3,pcie=1`

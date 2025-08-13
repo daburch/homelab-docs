@@ -2,7 +2,7 @@ site_name: Homelab Documentation
 site_description: Simple documentation about my homelab setup.
 repo_url: https://github.com/daburch/homelab-docs
 theme:
-  name: mkdocs
+  name: material
   features:
     - navigation.instant
     - navigation.tracking
@@ -16,6 +16,5 @@ theme:
       accent: indigo
 
 nav:
-  - Home: 
-    - Overview: index.md
-    - Proxmox: proxmox.md
+  - Overview: index.md
+  - Proxmox: proxmox.md

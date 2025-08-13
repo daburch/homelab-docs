@@ -1,11 +1,11 @@
-FROM python:3
+FROM python:3 AS builder
 
 WORKDIR /docs
-
 COPY . /docs/
+RUN pip install mkdocs-material
+RUN mkdocs build
 
-RUN pip install mkdocs
-
-EXPOSE 8000
-
-CMD ["mkdocs", "serve", "--dev-addr=0.0.0.0:8000"]
+FROM nginx:alpine
+COPY --from=builder /docs/site /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
