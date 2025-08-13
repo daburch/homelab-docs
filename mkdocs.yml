@@ -25,3 +25,7 @@ nav:
   - TrueNAS: truenas.md
   - Terraform: terraform.md
   - Vaultwarden: vaultwarden.md
+  - Servarr: servarr.md
+  - Homepage: homepage.md
+  - Tekton: tekton.md
+  - Docs: docs.md
