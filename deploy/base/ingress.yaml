@@ -3,6 +3,8 @@ kind: Ingress
 metadata:
   name: homelab-docs
   namespace: homelab-docs
+  labels:
+    "app.kubernetes.io/name": "homelab-docs"
   annotations:
     nginx.ingress.kubernetes.io/proxy-body-size: "1024m"
     "gethomepage.dev/enabled": "true"

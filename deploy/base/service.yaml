@@ -3,9 +3,11 @@ kind: Service
 metadata:
   name: homelab-docs
   namespace: homelab-docs
+  labels:
+    "app.kubernetes.io/name": "homelab-docs"
 spec:
   selector:
-    app: homelab-docs
+    "app.kubernetes.io/name": "homelab-docs"
   ports:
     - name: http
       port: 80
