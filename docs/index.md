@@ -6,7 +6,7 @@ Hello, World! This is a living document explaining the technologies and tools us
 
 - [Proxmox](proxmox.md)
 - [OPNSense](opnsense.md)
-- [Kubernetes (Talos Linux)](kubernetes.md)
+- [Kubernetes](kubernetes.md)
 - [Pihole + Unbound](pihole.md)
 - [Truenas](truenas.md)
 - [Caddy](caddy.md)

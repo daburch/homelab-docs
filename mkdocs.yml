@@ -19,3 +19,4 @@ nav:
   - Overview: index.md
   - Proxmox: proxmox.md
   - OPNSense: opnsense.md
+  - Kubernetes: kubernetes.md
