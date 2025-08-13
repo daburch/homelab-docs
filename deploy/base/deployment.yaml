@@ -21,10 +21,11 @@ spec:
           ports:
             - containerPort: 80
           securityContext:
-            allowPrivilegeEscalation: false
             runAsUser: 1000
+            runAsGroup: 1000
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
             capabilities:
               drop: ["ALL"]
-            runAsNonRoot: true
             seccompProfile:
               type: RuntimeDefault
