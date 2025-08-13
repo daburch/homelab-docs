@@ -16,3 +16,7 @@ Hello, World! This is a living document explaining the technologies and tools us
 - [Homepage](homepage.md)
 - [Tekton](tekton.md)
 - [Docs](docs.md)
+
+## Diagram
+
+![Server Diagram](img/diagram.png)
