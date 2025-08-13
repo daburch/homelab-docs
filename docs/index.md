@@ -5,8 +5,8 @@ Hello, World! This is a living document explaining the technologies and tools us
 ## Technologies
 
 - Proxmox
-- Kubernetes ( Talos Linux )
 - OPNSense
+- Kubernetes ( Talos Linux )
 - Pihole + Unbound
 - Truenas
 - Caddy
