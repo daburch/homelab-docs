@@ -20,3 +20,4 @@ nav:
   - Proxmox: proxmox.md
   - OPNSense: opnsense.md
   - Kubernetes: kubernetes.md
+  - Pihole: pihole.md

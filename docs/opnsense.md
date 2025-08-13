@@ -21,6 +21,11 @@ Once OPNSense is installed and configured, our router can be switched to access-
 
 DHCP should be disabled and a static IP can be set after the switch.
 
+## DNS
+
+OPNsense is configured to use [Pi-Hole](pihole.md) as its DNS server, providing ad-blocking and tracking protection for all devices on our network.
+- services->Dnsmasq DNS & DHCP->DHCP Options
+
 ## VPN
 
 All egress traffic originating from our Kubernetes cluster is routed through our VPN provider, NordVPN. A killswitch rule is configured to prevent any traffic from leaking outside the VPN tunnel.
