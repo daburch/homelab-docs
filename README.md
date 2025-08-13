@@ -1,2 +1,3 @@
 # homelab-docs
-Step by step rebuild guide for my home server.
+
+Simple documentation about my homelab setup.
