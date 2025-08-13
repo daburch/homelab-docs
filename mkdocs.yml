@@ -21,3 +21,4 @@ nav:
   - OPNSense: opnsense.md
   - Kubernetes: kubernetes.md
   - Pihole: pihole.md
+  - Caddy: caddy.md
