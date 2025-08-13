@@ -29,4 +29,4 @@ docs.dbhomelab.com {
 
 For local certs, we use [MKCert](https://github.com/FiloSottile/mkcert) to create self-signed certificates for endpoints not available outside of LAN. These certs are trusted by the local machine and remove any browser warnings about untrusted certificates.
 
-For public certs, Caddy automatically obtains and renews SSL/TLS certificates for your domains using Let's Encrypt. Simply adding the tls example@example.com directive to the Caddyfile enables this functionality.
+For public certs, Caddy automatically obtains and renews SSL/TLS certificates for your domains using [Let's Encrypt](https://letsencrypt.org). Simply adding the tls example@example.com directive to the Caddyfile enables this functionality.

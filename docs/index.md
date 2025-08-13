@@ -10,6 +10,7 @@ Hello, World! This is a living document explaining the technologies and tools us
 - [Pihole + Unbound](pihole.md)
 - [Caddy](caddy.md)
 - [Truenas](truenas.md)
+- [Terraform](terraform.md)
 - [Vaultwarden](vaultwarden.md)
 - [Servarr stack](servarr.md)
 - [Tekton](tekton.md)

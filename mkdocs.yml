@@ -23,3 +23,5 @@ nav:
   - PiHole: pihole.md
   - Caddy: caddy.md
   - TrueNAS: truenas.md
+  - Terraform: terraform.md
+  - Vaultwarden: vaultwarden.md

@@ -15,12 +15,14 @@ Drives will be passed through to the TrueNAS VM to allow direct access to the ph
 ## Users and Groups
 
 Each application should have their own user and group to isolate permissions and enhance security. Create the group first so it can be assigned to the user with desired IDs.
+
 - credentials->Groups
 - credentials->Users
 
 ## Storage Pools
 
 Drives will be configured into storage pools in TrueNAS. We have 3 pools:
+
 - NFS Pool
     - Standard NFS storage with mirroring.
     - 2 6TB HDDs

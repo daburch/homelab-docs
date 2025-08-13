@@ -16,6 +16,10 @@ We use the [Kubernetes Dashboard](https://kubernetes.io/docs/tasks/access-applic
 
 Storage needs for our Kubernetes cluster are met through our NFS storage in [TrueNAS](truenas.md). Datasets will be created for each application to ensure isolation and manageability. Individual applications will map these datasets through Persistent Volumes (PVs) and Persistent Volume Claims (PVCs).
 
+## Routing
+
+MetalLB is used to provide load balancing for our Kubernetes services. It assigns external IP addresses to services of type LoadBalancer, allowing them to be accessed from outside the cluster. [Caddy](caddy.md) will route necessary traffic to these services using MetalLB and the ingress.
+
 ## Additional Tools
 
 - [Helm](https://helm.sh/) is used for managing Kubernetes applications through Helm charts, allowing for easy deployment and management of complex applications.
