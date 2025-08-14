@@ -19,4 +19,4 @@ Hello, World! This is a living document explaining the technologies and tools us
 
 ## Diagram
 
-![Server Diagram](img/diagram.png)
+[![Server Diagram](img/diagram.png)](img/diagram.png)
