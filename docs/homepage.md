@@ -2,7 +2,7 @@
 
 Homepage is used to give an overview of all applications running in the homelab.
 
-![Homepage Screenshot](img/homepage.png)(img/homepage.png)
+[![Homepage Screenshot](img/homepage.png)](img/homepage.png)
 
 ## References
 
