@@ -11,7 +11,7 @@ theme:
     - content.code.copy
     - navigation.expand
   palette:
-    - scheme: default
+    - scheme: slate
       primary: indigo
       accent: indigo
 
