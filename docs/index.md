@@ -15,6 +15,7 @@ Hello, World! This is a living document explaining the technologies and tools us
 - [Servarr](servarr.md)
 - [Homepage](homepage.md)
 - [Tekton](tekton.md)
+- [NUT](nut.md)
 - [Docs](docs.md)
 
 ## Diagram
