@@ -26,13 +26,23 @@ DHCP should be disabled and a static IP can be set after the switch.
 OPNsense is configured to use [Pi-Hole](pihole.md) as its DNS server, providing ad-blocking and tracking protection for all devices on our network.
 - services->Dnsmasq DNS & DHCP->DHCP Options
 
+## Dynamic DNS
+
+Public service records are maintained from OPNsense with the `os-ddclient` plugin.
+
+- Keep OPNsense current enough for the supported `os-ddclient` plugin.
+- Select the `ddclient` backend when the DNS provider is not listed by the native backend.
+- Use the WAN interface IPv4 address as the detected address.
+- Do not use the `WAN_DHCP` gateway value as the public WAN address. Confirm the assigned WAN address under the interface overview.
+- Store the DNS provider API credentials in the password manager, not in this repository.
+- A log result of `SUCCESS ... skipped ... address was already set` is healthy when the provider record already matches the WAN address.
+
+After a WAN-address change, verify the public DNS record, the externally presented TLS certificate, and one representative public webhook or route.
+
 ## VPN
 
-All egress traffic originating from our Kubernetes cluster is routed through our VPN provider, NordVPN. A killswitch rule is configured to prevent any traffic from leaking outside the VPN tunnel.
+Route Kubernetes internet egress through a dedicated VPN-provider gateway. Add an explicit kill-switch rule immediately after the policy route so cluster traffic cannot fall back to the ordinary WAN path when the tunnel is unavailable.
 
-Egress traffic originating from other sources is not routed through the VPN so latency-sensitive applications won't experience degraded performance.
+Traffic from other sources can continue through the normal gateway when the threat model and latency requirements allow it. Add every new cluster node to both the policy-route and kill-switch aliases before accepting workloads on it.
 
-## References
-
-- https://support.nordvpn.com/hc/en-us/articles/20397569418129-OPNsense-21-setup-with-NordVPN
-- https://www.redelijkheid.com/blog/2025/3/27/opnsense-openvpn-instances-and-nordvpn-clients
+Use the VPN provider's current OPNsense/OpenVPN guidance for certificates, authentication, endpoints, and cipher requirements. Keep provider account details and live endpoint information out of this repository.
