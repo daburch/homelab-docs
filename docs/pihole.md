@@ -19,10 +19,10 @@ Select a few blocklists and add them to the subscribed lists.
 
 ## Configuration
 
-We use Pihole to set up our .local domains for internal DNS resolution.
+Use Pi-hole to manage an internal DNS zone. `home.arpa` is suitable for examples and avoids colliding with multicast DNS use of `.local`.
 
 - settings->Local DNS Records
-- Add a new record for each .local domain routing to our reverse proxy, [Caddy](caddy.md), IP
+- Add a record such as `app.home.arpa` for each service routed through the [Caddy](caddy.md) address.
 - Also add records for external domains routing to the same IP to avoid NAT loopback issues.
 
 DNS upstreams should be set to ONLY Unbound, 127.0.0.1:5335

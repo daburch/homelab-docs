@@ -13,21 +13,19 @@ Caddy is our reverse proxy, handling incoming requests and routing them to the a
 
 Caddy is configured using a Caddyfile. This file defines the routing rules for incoming requests.
 
-```
-homepage.local {
-    reverse_proxy http://192.168.0.241
-    tls /etc/caddy/certs/homepage.local.pem /etc/caddy/certs/homepage.local-key.pem
+```caddyfile
+app.home.arpa {
+    reverse_proxy http://192.0.2.10
+    tls /etc/caddy/certs/app.home.arpa.pem /etc/caddy/certs/app.home.arpa-key.pem
 }
 
-docs.dbhomelab.com {
-    reverse_proxy http://192.168.0.241
-    tls example@example.com
+docs.example.com {
+    reverse_proxy http://192.0.2.10
+    tls admin@example.com
 }
 ```
 
-All homelab application traffic enters through Caddy. Kubernetes hostnames are proxied to NGINX Gateway Fabric at `192.168.0.241`; the matching Gateway API `HTTPRoute` selects the application service. Caddy must preserve the original request hostname so that the Gateway can match the correct route.
-
-The former ingress-nginx load-balancer address `192.168.0.240` is retired and must not be used as an application upstream.
+Application traffic enters through Caddy. Kubernetes hostnames are proxied to the Gateway API data-plane address; the matching `HTTPRoute` selects the application Service. Caddy must preserve the original request hostname so that the Gateway can match the correct route.
 
 ## Certs
 
@@ -35,6 +33,6 @@ For local certs, we use [MKCert](https://github.com/FiloSottile/mkcert) to creat
 
 For public certs, Caddy automatically obtains and renews SSL/TLS certificates for your domains using [Let's Encrypt](https://letsencrypt.org). Simply adding the tls example@example.com directive to the Caddyfile enables this functionality.
 
-Public certificate issuance depends on public DNS resolving to the current WAN interface address and the required NAT/firewall path reaching Caddy. If renewal fails, compare the authoritative public DNS answer with the WAN address shown in the OPNsense interface overview before changing Caddy or port-forwarding rules.
+Public certificate issuance depends on public DNS resolving to the current WAN interface address and the required NAT/firewall path reaching Caddy. If renewal fails, compare the authoritative public DNS answer with the firewall's assigned WAN address before changing Caddy or port-forwarding rules.
 
 After correcting DNS, restart or reload Caddy as appropriate, then verify that it obtained a fresh certificate and that an external client can validate the complete TLS chain. Do not commit Caddy's ACME account data, certificate private keys, or storage backups.

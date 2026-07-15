@@ -5,6 +5,10 @@ metadata:
   namespace: homelab-docs
   labels:
     app.kubernetes.io/name: homelab-docs
+  annotations:
+    gethomepage.dev/enabled: "true"
+    gethomepage.dev/icon: "https://plmlab.math.cnrs.fr/uploads/-/system/project/avatar/1364/mkdocs_logo.png"
+    gethomepage.dev/name: "Homelab Docs"
 spec:
   parentRefs:
     - group: gateway.networking.k8s.io

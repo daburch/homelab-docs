@@ -4,13 +4,13 @@ Kubernetes is the backbone of our container orchestration, providing a robust pl
 
 ## Installation
 
-Our Kubernetes cluster is built using [Talos Linux](https://www.talos.dev/). We currently run 1 control plane node and 2 worker nodes, with room to scale as needed.
+The Kubernetes cluster is built using [Talos Linux](https://www.talos.dev/). Use an appropriate control-plane and worker topology for the required availability, maintenance, and recovery model.
 
 Kubectl should be installed on your local machine for managing the cluster as part of the installation process.
 
 ## Cluster UI
 
-We use [Headlamp](https://headlamp.dev/) at `https://headlamp.kube.local` for managing and monitoring the cluster. Headlamp is deployed through Terraform and Helm. Authentication uses a short-lived Kubernetes token; no persistent login token is stored.
+[Headlamp](https://headlamp.dev/) provides a cluster management UI. Deploy it through Terraform and Helm, expose it only on an internal route such as `https://cluster-ui.home.arpa`, and prefer short-lived authentication over a persistent login token.
 
 ## Storage
 
@@ -20,16 +20,9 @@ Storage needs for our Kubernetes cluster are met through our NFS storage in [Tru
 
 MetalLB provides external IP addresses for Kubernetes services of type `LoadBalancer`. Application traffic uses the Kubernetes Gateway API rather than legacy Ingress resources.
 
-The active routing stack is:
+The routing stack uses a conformant Gateway API controller, a shared `Gateway`, and application-owned `HTTPRoute` resources. Pin controller and CRD versions in deployment source, but do not publish the live patch baseline as an environment inventory.
 
-- Gateway API CRDs `v1.5.1`
-- NGINX Gateway Fabric `2.6.6`
-- `GatewayClass` named `ngf`
-- `Gateway` named `homelab-gateway` in the `nginx-gateway` namespace
-- Gateway load-balancer address `192.168.0.241`
-- 13 application `HTTPRoute` resources
-
-All client traffic enters through [Caddy](caddy.md), which terminates TLS and proxies the request to the Gateway address. The former ingress-nginx deployment (Helm chart `4.15.1`, controller `1.15.1`) and all legacy `Ingress` objects were retired on 2026-07-12.
+Client traffic enters through [Caddy](caddy.md), which terminates TLS and proxies the request to the Gateway address. Prefer one current routing API and remove legacy ingress resources after every route and policy has been validated.
 
 ## Additional Tools
 

@@ -10,7 +10,7 @@ Tekton runs on our Kubernetes cluster listening for Github webhooks. When there 
 
 Tekton installation is performed through [Terraform](terraform.md).
 
-The LAN dashboard and public webhook listener are exposed with Gateway API `HTTPRoute` resources through NGINX Gateway Fabric. [Caddy](caddy.md) terminates TLS and forwards both hostnames to the Gateway at `192.168.0.241`. The public listener still validates the GitHub webhook signature before triggering a pipeline.
+The internal dashboard and public webhook listener are exposed with Gateway API `HTTPRoute` resources. [Caddy](caddy.md) terminates TLS and forwards both hostnames to the Gateway. The public listener must validate the Git provider's webhook signature before triggering a pipeline.
 
 ## Runner
 
@@ -57,4 +57,4 @@ When we push a commit to the repository, the following steps occur:
 
 ## Dashboard
 
-A dashboard is available on LAN at [tekton-dashboard.local](https://tekton-dashboard.local) to view pipeline runs, logs, and other related information.
+Expose the dashboard only on an internal route such as `https://ci.home.arpa` so operators can review pipeline runs and logs without publishing the live hostname.

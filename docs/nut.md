@@ -4,7 +4,7 @@ NUT is our battery backup solution, providing power management and monitoring fo
 
 ## Hardware
 
-The Homelab hardware is protected by an APC Back-UPS Pro 1500VA unit, which provides battery backup and surge protection.
+Protect the host, network, and storage path with an appropriately sized UPS. Choose capacity from measured load, required runtime, shutdown duration, and battery-replacement expectations rather than copying another installation's model.
 
 ## Software
 
@@ -16,6 +16,6 @@ The Homepage app integrates with PeaNUT to display UPS status and notifications.
 
 ## Shutdown Procedures
 
-In the event of a power outage, NUT will automatically initiate a graceful shutdown of all connected devices after a predefined delay. This ensures that all services are properly stopped and data is not lost.
+In the event of a power outage, NUT should initiate a controlled shutdown based on tested battery and communication conditions. Validate the complete shutdown order without publishing live device names, credentials, or timing values.
 
 Talos Linux doesn't support qemu-guest-agent, so we just send a hard shutdown signal to the hosts. Talos is built to support this use case.

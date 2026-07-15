@@ -1,0 +1,21 @@
+name: Public content check
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Scan published content
+        shell: pwsh
+        run: ./scripts/check-public-content.ps1
