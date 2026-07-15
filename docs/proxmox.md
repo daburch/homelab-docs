@@ -46,11 +46,11 @@ The VM needing the GPU should already be created and powered off.
 
 - Edit the VM config
     - `nano /etc/pve/qemu-server/<VMID>.conf`
-    - Add the GPU PCI address:
-        - `hostpci0: 01:00.0,pcie=1`
-        - `hostpci1: 01:00.1,pcie=1`
-        - `hostpci2: 01:00.2,pcie=1`
-        - `hostpci3: 01:00.3,pcie=1`
+    - Add each required GPU function using its verified PCI address:
+        - `hostpci0: <GPU_FUNCTION_0>,pcie=1`
+        - `hostpci1: <GPU_FUNCTION_1>,pcie=1`
+
+Keep the actual PCI addresses and IOMMU grouping in private recovery documentation. Confirm that every required function is bound to VFIO before starting the VM.
 
 ## Drive passthrough
 
@@ -64,3 +64,5 @@ Storage drives can be passed through to VMs, TrueNAS in particular, to allow dir
    - `nano /etc/pve/qemu-server/<VMID>.conf`
    - Add the following for each disk:
      - `scsi1: /dev/disk/by-id/<DISK_ID>`
+
+Never publish the real `/dev/disk/by-id` values. They contain stable hardware identifiers needed for private recovery planning.

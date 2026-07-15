@@ -21,17 +21,13 @@ Each application should have their own user and group to isolate permissions and
 
 ## Storage Pools
 
-Drives will be configured into storage pools in TrueNAS. We have 3 pools:
+Separate storage by durability and performance requirements rather than exposing the live device inventory:
 
-- NFS Pool
-    - Standard NFS storage with mirroring.
-    - 2 6TB HDDs
-- Scratch Pool
-    - working directory for downloads
-    - 1 1TB HDD
-- SSD Pool
-    - high performance storage
-    - 1 2TB SSD
+- Capacity tier: mirrored or otherwise redundant storage for application state and media.
+- Scratch tier: disposable working space for downloads, caches, and temporary files.
+- Performance tier: faster storage for workloads whose latency or rebuild cost justifies it.
+
+Size each tier from measured demand, recovery objectives, redundancy, and replacement budget. Keep exact pool names, capacities, serials, and device mappings in private operational documentation.
 
 ## Datasets
 

@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 720" role="img" aria-labelledby="title desc">
+  <title id="title">General homelab architecture</title>
+  <desc id="desc">A generalized architecture showing clients, firewall, DNS, reverse proxy, Kubernetes, storage, CI/CD, and backup power without live deployment details.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#8fb3d9"/>
+    </marker>
+    <style>
+      .bg { fill: #101820; }
+      .zone { fill: #172635; stroke: #54789b; stroke-width: 2; rx: 18; }
+      .node { fill: #21384b; stroke: #8fb3d9; stroke-width: 2; rx: 12; }
+      .external { fill: #253244; stroke: #d1a85a; stroke-width: 2; rx: 12; }
+      .label { fill: #f3f6f8; font: 600 20px system-ui, sans-serif; text-anchor: middle; }
+      .small { fill: #c8d5df; font: 16px system-ui, sans-serif; text-anchor: middle; }
+      .zone-label { fill: #9fc4e5; font: 600 18px system-ui, sans-serif; }
+      .line { fill: none; stroke: #8fb3d9; stroke-width: 3; marker-end: url(#arrow); }
+      .dashed { stroke-dasharray: 8 7; }
+    </style>
+  </defs>
+
+  <rect class="bg" width="1200" height="720"/>
+
+  <rect class="external" x="55" y="65" width="210" height="80"/>
+  <text class="label" x="160" y="100">LAN clients</text>
+  <text class="small" x="160" y="126">browser and admin tools</text>
+
+  <rect class="external" x="55" y="215" width="210" height="80"/>
+  <text class="label" x="160" y="250">Internet</text>
+  <text class="small" x="160" y="276">public clients and DNS</text>
+
+  <rect class="external" x="55" y="520" width="210" height="80"/>
+  <text class="label" x="160" y="555">Git provider</text>
+  <text class="small" x="160" y="581">reviewed source and webhooks</text>
+
+  <rect class="zone" x="330" y="35" width="820" height="625"/>
+  <text class="zone-label" x="355" y="70">Private homelab trust boundary</text>
+
+  <rect class="node" x="380" y="105" width="210" height="85"/>
+  <text class="label" x="485" y="140">Firewall</text>
+  <text class="small" x="485" y="166">routing, VPN, NAT</text>
+
+  <rect class="node" x="380" y="240" width="210" height="85"/>
+  <text class="label" x="485" y="275">Internal DNS</text>
+  <text class="small" x="485" y="301">service-name intent</text>
+
+  <rect class="node" x="650" y="105" width="210" height="85"/>
+  <text class="label" x="755" y="140">Reverse proxy</text>
+  <text class="small" x="755" y="166">TLS and request routing</text>
+
+  <rect class="node" x="910" y="105" width="190" height="220"/>
+  <text class="label" x="1005" y="142">Kubernetes</text>
+  <text class="small" x="1005" y="172">Gateway API</text>
+  <text class="small" x="1005" y="202">application services</text>
+  <text class="small" x="1005" y="232">persistent volumes</text>
+  <text class="small" x="1005" y="262">sealed credentials</text>
+  <text class="small" x="1005" y="292">monitoring surfaces</text>
+
+  <rect class="node" x="650" y="375" width="210" height="85"/>
+  <text class="label" x="755" y="410">Storage</text>
+  <text class="small" x="755" y="436">datasets and snapshots</text>
+
+  <rect class="node" x="910" y="520" width="190" height="85"/>
+  <text class="label" x="1005" y="555">CI/CD</text>
+  <text class="small" x="1005" y="581">build, push, deploy</text>
+
+  <rect class="node" x="380" y="520" width="210" height="85"/>
+  <text class="label" x="485" y="555">Backup power</text>
+  <text class="small" x="485" y="581">monitor and shut down</text>
+
+  <path class="line" d="M265 105 H380"/>
+  <path class="line" d="M265 255 H330 V148 H380"/>
+  <path class="line" d="M265 105 V282 H380"/>
+  <path class="line" d="M590 148 H650"/>
+  <path class="line" d="M590 282 H620 V180 H650"/>
+  <path class="line" d="M860 148 H910"/>
+  <path class="line" d="M910 282 H880 V418 H860"/>
+  <path class="line dashed" d="M265 560 H910"/>
+  <path class="line" d="M1005 520 V325"/>
+  <path class="line dashed" d="M590 562 H650 V460"/>
+</svg>

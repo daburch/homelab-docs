@@ -20,7 +20,7 @@ example 'kubernetes' provider
 ```
 provider "kubernetes" {
   config_path    = "~/.kube/config"
-  config_context = "homelab"
+  config_context = "example-cluster"
 }
 ```
 
@@ -32,9 +32,9 @@ each resource has a type and a name, and can have multiple attributes.
 
 example namespace resource
 ```
-resource "kubernetes_namespace" "servarr" {
+resource "kubernetes_namespace" "example_app" {
   metadata {
-    name = local.namespace
+    name = "example-app"
   }
 }
 ```
@@ -47,8 +47,8 @@ Modules can be local or remote, and can contain multiple resources.
 
 example module call
 ```
-module "vaultwarden" {
-  source = "./modules/vaultwarden"
+module "example_app" {
+  source = "./modules/example-app"
   namespace = local.namespace
 }
 ```
@@ -74,7 +74,7 @@ example output declaration
 ```
 output "namespace" {
   description = "The Kubernetes namespace"
-  value       = kubernetes_namespace.vaultwarden.metadata[0].name
+  value       = kubernetes_namespace.example_app.metadata[0].name
 }
 ```
 
