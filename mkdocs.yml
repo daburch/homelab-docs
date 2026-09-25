@@ -16,18 +16,21 @@ theme:
       accent: indigo
 
 nav:
-  - Overview: index.md
-  - Proxmox: proxmox.md
-  - OPNSense: opnsense.md
-  - Kubernetes: kubernetes.md
-  - PiHole: pihole.md
-  - Caddy: caddy.md
-  - TrueNAS: truenas.md
-  - Terraform: terraform.md
-  - Vaultwarden: vaultwarden.md
-  - Servarr: servarr.md
-  - Homepage: homepage.md
-  - Tekton: tekton.md
-  - NUT: nut.md
-  - Docs: docs.md
-  - Publication Policy: publication-policy.md
+  - Start here: index.md
+  - Platform:
+      - Proxmox: proxmox.md
+      - OPNsense: opnsense.md
+      - Pi-hole and Unbound: pihole.md
+      - Caddy: caddy.md
+      - TrueNAS: truenas.md
+      - Kubernetes: kubernetes.md
+      - Terraform: terraform.md
+  - Applications:
+      - Vaultwarden: vaultwarden.md
+      - Servarr: servarr.md
+      - Homepage: homepage.md
+  - Operations:
+      - NUT: nut.md
+      - Tekton: tekton.md
+      - Documentation site: docs.md
+  - Publication policy: publication-policy.md

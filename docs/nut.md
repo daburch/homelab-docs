@@ -1,6 +1,6 @@
 # Network UPS Tools (NUT)
 
-NUT is our battery backup solution, providing power management and monitoring for our UPS device.
+Network UPS Tools monitors a UPS and coordinates configured power-event handling. PeaNUT provides a browser view of UPS status.
 
 ## Hardware
 
@@ -18,4 +18,6 @@ The Homepage app integrates with PeaNUT to display UPS status and notifications.
 
 In the event of a power outage, NUT should initiate a controlled shutdown based on tested battery and communication conditions. Validate the complete shutdown order without publishing live device names, credentials, or timing values.
 
-Talos Linux doesn't support qemu-guest-agent, so we just send a hard shutdown signal to the hosts. Talos is built to support this use case.
+Talos supports an optional `siderolabs/qemu-guest-agent` extension in a custom image. Enable Proxmox guest-agent support only when that extension is installed; see the [Talos Proxmox guide](https://docs.siderolabs.com/talos/v1.11/platform-specific-installations/virtualized-platforms/proxmox).
+
+Record and test the configured guest shutdown path, timeout, and fallback for each VM. Guest-agent absence alone does not establish that a hard power-off is the configured or acceptable behavior.

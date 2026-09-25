@@ -1,6 +1,6 @@
 # Servarr
 
-The Servarr stack is our media management solution, providing a seamless way to organize and access our media library.
+Servarr applications manage media discovery and organization. Deploy their configuration storage and download paths consistently so the applications can exchange files.
 
 ## Installation
 

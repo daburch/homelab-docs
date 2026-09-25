@@ -1,68 +1,65 @@
 # Proxmox
 
-Proxmox is the heart of the server infrastructure. It hosts all of the VMs running various services and applications.
+Proxmox hosts the virtual machines for networking, storage, and applications. Start with ordinary VMs; add hardware passthrough when a workload needs direct access to a GPU or disk.
 
-## Installation
+## Install the host
 
-- [Download](https://proxmox.com/en/downloads) the installer and create a bootable USB drive.
-- Install Proxmox on the server machine.
+Download the installer from [Proxmox](https://proxmox.com/en/downloads), create a bootable USB drive, and install it on the intended server disk. Confirm the target disk before installation.
 
-## GPU passthrough
+Verify management access and create a small test VM before adding storage or network appliances. Keep a working console path for recovery from network or boot changes.
 
-For media servers or LLMs to run properly, GPU passthrough is essential. This allows the VM to directly access the GPU for better performance.
+## Plan GPU passthrough
 
-### Enable GPU passthrough in Proxmox
+Passthrough can provide hardware acceleration for media transcoding or model inference. It is not required for every media server or model workload.
 
-- Enable IOMMU in the BIOS.
-- Update the grubfile to enable IOMMU
-    - `nano /etc/default/grub`
-    - replace this field -- GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on iommu=pt"
-- Update and reboot
-    - `update-grub`
-    - `reboot`
+Before editing host configuration:
 
-- Get the GPU PCI address
-    - `lspci | grep -i nvidia`
-- Bind the VFIO
-    - `echo "options vfio-pci ids=YOUR_GPU_ID" > /etc/modprobe.d/vfio.conf`
-- Blacklist NVIDIA drivers from the host
-    - `echo "blacklist nouveau" >> /etc/modprobe.d/blacklist.conf`
-    - `echo "blacklist nvidia" >> /etc/modprobe.d/blacklist.conf`
-    - `echo "blacklist nvidiafb" >> /etc/modprobe.d/blacklist.conf`
-    - `echo "blacklist snd_hda_intel" >> /etc/modprobe.d/blacklist.conf`
-    - `echo "blacklist xhci_hcd" >> /etc/modprobe.d/blacklist.conf`
-    - `echo "blacklist i2c_nvidia_gpu" >> /etc/modprobe.d/blacklist.conf`
-- Add vfio-pci.ids to /etc/default/grub
-    - `nano /etc/default/grub`
-    - replace this field -- `GRUB_CMDLINE_LINUX_DEFAULT="quiet intel_iommu=on iommu=pt vfio-pci.ids=<YOUR_GPU_PCI_ID_ADDRESS_RANGES>"`
-- Update and reboot
-    - `update-initramfs -u`
-    - `update-grub`
-    - `reboot`
+- Identify the CPU platform, bootloader, GPU, required PCI functions, and IOMMU groups.
+- Confirm the host can operate without the selected GPU and has another recovery console.
+- Stop the target VM and retain copies of the host and VM configuration you will change.
+- Check the [Proxmox PCI passthrough reference](https://pve.proxmox.com/pve-docs/chapter-qm.html#qm_pci_passthrough) for the installed release.
 
-### Setup GPU Passthrough in the VM
+### Configure the host
 
-The VM needing the GPU should already be created and powered off.
+1. Enable the relevant virtualization and IOMMU support in firmware.
+2. Follow the installed release's instructions for the actual bootloader and CPU. An Intel GRUB example is not a universal kernel command line; preserve existing options.
+3. Inspect PCI devices and drivers:
 
-- Edit the VM config
-    - `nano /etc/pve/qemu-server/<VMID>.conf`
-    - Add each required GPU function using its verified PCI address:
-        - `hostpci0: <GPU_FUNCTION_0>,pcie=1`
-        - `hostpci1: <GPU_FUNCTION_1>,pcie=1`
+   ```sh
+   lspci -nnk
+   ```
 
-Keep the actual PCI addresses and IOMMU grouping in private recovery documentation. Confirm that every required function is bound to VFIO before starting the VM.
+4. Bind the intended device functions to VFIO using the verified device IDs. A PCI address identifies a function; a vendor/device ID identifies a device type. Do not interchange them.
+5. Adjust conflicting host drivers only where required for those devices. Do not copy a blanket audio or USB driver blacklist.
+6. Regenerate the affected boot artifacts as documented for that bootloader, then reboot during the planned maintenance window.
 
-## Drive passthrough
+### Attach and validate
 
-Storage drives can be passed through to VMs, TrueNAS in particular, to allow direct access to the physical disks. This is useful for performance and for using features like ZFS.
+Confirm `lspci -nnk` reports the expected VFIO driver before assigning the GPU. With the VM stopped, add the verified PCI functions through the Proxmox hardware UI, following the machine-type requirements in the reference.
 
-### Enable Drive Passthrough
+Start the VM and check guest driver detection and one representative workload. Also verify host management access and other devices still work. Retain actual device mappings in private recovery documentation.
 
-1. Identify the disk you want to passthrough:
-   - `ls -l /dev/disk/by-id/`
-2. Edit the VM configuration:
-   - `nano /etc/pve/qemu-server/<VMID>.conf`
-   - Add the following for each disk:
-     - `scsi1: /dev/disk/by-id/<DISK_ID>`
+### Roll back
 
-Never publish the real `/dev/disk/by-id` values. They contain stable hardware identifiers needed for private recovery planning.
+Stop the VM and remove its new PCI assignments. Restore only the host configuration entries changed for this attempt, regenerate the affected boot artifacts, and reboot if required. Confirm the host and VM work without passthrough before retrying.
+
+## Pass through a disk
+
+Use stable disk identities and verify that the selected disk is not the host boot disk, an active host filesystem, or storage owned by another VM.
+
+1. Inspect the candidate identities:
+
+   ```sh
+   ls -l /dev/disk/by-id/
+   ```
+
+2. With the target VM stopped, record its configuration and add the intended disk mapping. A configuration example is:
+
+   ```text
+   scsi1: /dev/disk/by-id/<DISK_ID>
+   ```
+
+3. Confirm the slot is unused, then start the VM and verify the expected disk appears. Do not initialize or format it merely to test detection.
+4. To undo the mapping, stop the VM and remove the assignment without deleting or wiping the physical disk.
+
+For [TrueNAS](truenas.md), decide how disks and their controller will be presented before creating pools. Keep real disk identifiers, pool membership, and recovery details private.

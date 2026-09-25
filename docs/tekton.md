@@ -1,60 +1,39 @@
 # Tekton
 
-Tekton is our CI/CD solution, providing a framework for creating and managing continuous integration and continuous delivery pipelines.
+Tekton runs build and deployment tasks as Kubernetes workloads. A typical flow accepts a Git webhook, checks the event, builds an image with BuildKit, and deploys the reviewed application configuration.
 
-## Summary
+## Before you start
 
-Tekton runs on our Kubernetes cluster listening for Github webhooks. When there is any change to a monitored repo, Tekton will rebuild and redeploy the affected services.
+You need a working [Kubernetes](kubernetes.md) cluster, a container registry, and a source repository. Keep the platform installation in [Terraform](terraform.md), and define which repository owns each application's pipeline and deployment files.
 
-## Installation
+Expose the dashboard on an internal route such as `https://ci.home.arpa`. If webhooks arrive from the internet, give the EventListener a separate public route through [Caddy](caddy.md) and Gateway API.
 
-Tekton installation is performed through [Terraform](terraform.md).
+## From event to deployment
 
-The internal dashboard and public webhook listener are exposed with Gateway API `HTTPRoute` resources. [Caddy](caddy.md) terminates TLS and forwards both hostnames to the Gateway. The public listener must validate the Git provider's webhook signature before triggering a pipeline.
+1. GitHub sends a webhook to the EventListener.
+2. Interceptors validate the webhook signature and filter accepted events before a run can be created.
+3. A TriggerBinding extracts values such as the repository and commit.
+4. A TriggerTemplate uses those values to create a PipelineRun.
+5. The pipeline executes its tasks, builds and pushes an image, and performs the configured deployment checks.
 
-## Runner
+Configure event filters deliberately. A webhook arriving does not mean its branch or event should deploy.
 
-Buildkit is used as the default container build tool for Tekton.
+## Objects you will encounter
 
-## Core Concepts
+| Object | Role |
+| --- | --- |
+| EventListener | Receives webhook events and connects them to triggers. |
+| Interceptor | Validates, filters, or enriches the event before binding parameters. |
+| TriggerBinding | Maps event fields to parameters. |
+| TriggerTemplate | Defines the run resource created from those parameters. |
+| Task | Defines steps for one unit of work, such as building an image. |
+| Pipeline | Connects tasks and their dependencies. |
+| PipelineRun | Records one execution, its inputs, and its results. |
 
-Tekton introduces several key concepts:
+The upstream [EventListener guide](https://tekton.dev/docs/triggers/eventlisteners/), [interceptor guide](https://tekton.dev/docs/triggers/interceptors/), and [binding reference](https://tekton.dev/docs/triggers/triggerbindings/) explain the event-processing configuration.
 
-- **Task**: The smallest building block in Tekton, representing a single unit of work.
-- **Pipeline**: A series of tasks that are executed in a specific order.
-- **TriggerTemplate**: A template for defining the parameters and payload for triggering a pipeline.
-- **TriggerBinding**: A binding that maps incoming event data to the parameters defined in a TriggerTemplate.
-- **EventListener**: A component that listens for events and triggers the appropriate pipelines.
+## Validate the path
 
-### Task
+Use a controlled test commit. Confirm the intended event creates one run, each task succeeds, the expected image is pushed, and the application rollout and route checks pass. Test that invalid signatures and excluded events cannot trigger deployment.
 
-Tasks are the core building blocks for Tekton pipelines. Each task defines a set of steps that are executed sequentially. Tasks can be reused across different pipelines, promoting consistency and reducing duplication.
-
-### Pipeline
-
-Pipelines are composed of multiple tasks that are executed in a specific order. Each pipeline defines the sequence of tasks to be performed, along with any necessary input and output parameters. Pipelines can be triggered by various events, such as code commits or pull requests, enabling automated workflows.
-
-### TriggerTemplate
-
-TriggerTemplates are used to define the parameters and payload for triggering a pipeline. They allow you to specify the conditions under which a pipeline should be executed, as well as the input parameters that should be passed to the pipeline when it is triggered.
-
-### TriggerBinding
-
-TriggerBindings are used to extract information from incoming events and map it to the parameters defined in a TriggerTemplate. They enable the dynamic population of pipeline parameters based on the context of the event that triggered the pipeline.
-
-### EventListener
-
-EventListeners are responsible for receiving incoming events and triggering the appropriate pipelines. They listen for specific events, such as webhooks from Git repositories, and initiate the pipeline execution based on the defined TriggerTemplates and TriggerBindings.
-
-## Flow Summary
-
-When we push a commit to the repository, the following steps occur:
-
-- Github sends a webhook event to the Tekton EventListener.
-- The EventListener uses the TriggerBinding to extract relevant information from the event, such as the commit SHA and author.
-- The EventListener then uses the TriggerTemplate to define the parameters for the pipeline run, including the extracted information.
-- Finally, the EventListener triggers the pipeline execution with the defined parameters, initiating the CI/CD process.
-
-## Dashboard
-
-Expose the dashboard only on an internal route such as `https://ci.home.arpa` so operators can review pipeline runs and logs without publishing the live hostname.
+Keep tokens, webhook secrets, registry credentials, and sensitive logs outside public documentation. Use the internal dashboard to inspect failures and publish only generalized troubleshooting lessons.
