@@ -1,6 +1,6 @@
-# PiHole
+# Pi-hole and Unbound
 
-Pi-Hole is the core of our DNS resolution, providing ad-blocking and tracking protection for all devices on our network.
+Pi-hole answers local DNS queries and filters configured blocklists. Unbound resolves upstream queries.
 
 It runs on a small VM alongside [Unbound](https://nlnetlabs.nl/projects/unbound/about/), our DNS resolver.
 
@@ -8,7 +8,7 @@ It runs on a small VM alongside [Unbound](https://nlnetlabs.nl/projects/unbound/
 
 - Create a small VM in proxmox
 - Install a lightweight linux image to host the apps. i.e. Debian
-- Install Pi-Hole
+- Install Pi-hole
     - https://github.com/pi-hole/pi-hole/#one-step-automated-install
 - Install Unbound
     - https://www.nlnetlabs.nl/projects/unbound/download/

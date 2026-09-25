@@ -1,6 +1,6 @@
-# OPNSense
+# OPNsense
 
-OPNSense is the heart of our network security, providing a robust firewall and routing platform.
+OPNsense routes traffic between networks and applies firewall, DNS, and VPN policy.
 
 ## Installation
 
@@ -11,13 +11,13 @@ https://opnsense.org/get-started/
 
 ## NIC Setup
 
-The server machine has a second NIC installed for LAN traffic. The main NIC ( on the motherboard IO ) will recieve WAN traffic.
+The server machine has a second NIC installed for LAN traffic. The main NIC ( on the motherboard IO ) will receive WAN traffic.
 
 A Linux bridge is created to connect the LAN interface to the virtual machines.
 
 ## Routing
 
-Once OPNSense is installed and configured, our router can be switched to access-point mode and serve as a wireless access point for our network.
+Once OPNsense is installed and configured, our router can be switched to access-point mode and serve as a wireless access point for our network.
 
 DHCP should be disabled and a static IP can be set after the switch.
 

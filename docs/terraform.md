@@ -1,6 +1,6 @@
 # Terraform
 
-Terraform is our infrastructure as code (IaC) tool, allowing us to define and manage our infrastructure using declarative configuration files. It enables us to provision and manage cloud resources consistently and reproducibly.
+Terraform manages infrastructure from configuration files. Review its plan to see how a proposed change affects the resources it owns.
 
 ## Installation
 
@@ -8,7 +8,7 @@ https://developer.hashicorp.com/terraform/install
 
 ## Configuration
 
-We store our Terraform state file on our TrueNAS server, The drive needs to be mounted on the machine running Terraform. TF files are stored in a Git repository for version control.
+Keep configuration in Git and choose a state backend with deliberate access, locking, and recovery rules. If a local backend uses mounted TrueNAS storage, make that storage available before running Terraform and prevent concurrent writers.
 
 ## Core Concepts
 
@@ -17,7 +17,7 @@ We store our Terraform state file on our TrueNAS server, The drive needs to be m
 A provider is a plugin that lets Terraform manage specific types of resources.
 
 example 'kubernetes' provider
-```
+```hcl
 provider "kubernetes" {
   config_path    = "~/.kube/config"
   config_context = "example-cluster"
@@ -31,7 +31,7 @@ A resource is a single piece of infrastructure managed by Terraform.
 each resource has a type and a name, and can have multiple attributes.
 
 example namespace resource
-```
+```hcl
 resource "kubernetes_namespace" "example_app" {
   metadata {
     name = "example-app"
@@ -46,7 +46,7 @@ A module is a reusable piece of Terraform configuration that can be called multi
 Modules can be local or remote, and can contain multiple resources.
 
 example module call
-```
+```hcl
 module "example_app" {
   source = "./modules/example-app"
   namespace = local.namespace
@@ -58,7 +58,7 @@ module "example_app" {
 A variable is a named value that can be used in Terraform configuration.
 
 example variable declaration
-```
+```hcl
 variable "namespace" {
   description = "The Kubernetes namespace to use"
   type        = string
@@ -71,7 +71,7 @@ variable "namespace" {
 An output is a value that can be returned from a Terraform module or resource.
 
 example output declaration
-```
+```hcl
 output "namespace" {
   description = "The Kubernetes namespace"
   value       = kubernetes_namespace.example_app.metadata[0].name
@@ -84,7 +84,7 @@ Terraform maintains a state file that contains the current state of the infrastr
 This state file is used to determine what changes need to be made to the infrastructure when you run `terraform apply`.
 
 The state file is stored locally by default, but can also be stored remotely in a backend such as S3 or Terraform Cloud.
-We will store the state file in our truenas server.
+Keep state outside Git and public documentation; it can contain sensitive values.
 
 ### Init
 

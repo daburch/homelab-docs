@@ -1,6 +1,6 @@
 # Kubernetes
 
-Kubernetes is the backbone of our container orchestration, providing a robust platform for deploying and managing applications in a microservices architecture.
+Kubernetes runs container workloads on Talos VMs. TrueNAS provides persistent storage, MetalLB supplies service addresses, and Gateway API routes requests from Caddy.
 
 ## Installation
 
